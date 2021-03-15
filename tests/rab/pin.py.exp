@@ -1,0 +1,14 @@
+Pin(Pin.cpu.P000, mode=Pin.IN, pull=Pin.PULL_NONE)
+P000
+0
+0
+Pin(Pin.cpu.P000, mode=Pin.IN, pull=Pin.PULL_UP)
+1
+Pin(Pin.cpu.P000, mode=Pin.IN, pull=Pin.PULL_UP)
+1
+0
+1
+0
+1
+0
+1
