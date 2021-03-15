@@ -1,0 +1,7 @@
+ValueError -1
+ValueError 0
+SPI 1
+SPI 2
+SPI(1)
+b'\xff'
+b'\xff'
