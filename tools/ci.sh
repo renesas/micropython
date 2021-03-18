@@ -582,3 +582,21 @@ function ci_zephyr_build {
     docker exec zephyr-ci west build -p auto -b mimxrt1050_evk
     docker exec zephyr-ci west build -p auto -b reel_board
 }
+
+
+########################################################################################
+# ports/ra
+
+function ci_ra_setup {
+    ci_gcc_arm_setup
+    pip3 install pyhy
+}
+
+function ci_ra_board_build {
+    make ${MAKEOPTS} -C mpy-cross
+    make ${MAKEOPTS} -C ports/ra submodules
+    git submodule update --init lib/fsp
+    make ${MAKEOPTS} -C ports/ra BOARD=RA4M1_CLICKER
+    make ${MAKEOPTS} -C ports/ra BOARD=RA6M2_EK
+}
+
