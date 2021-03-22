@@ -422,6 +422,11 @@ mp_uint_t uart_rx_any(pyb_uart_obj_t *self) {
     return ra_sci_rx_any(ch);
 }
 
+mp_uint_t uart_tx_avail(pyb_uart_obj_t *self) {
+    int ch = (int)self->uart_id - 1;
+    return ra_sci_tx_wait(ch);
+}
+
 // Waits at most timeout milliseconds for at least 1 char to become ready for
 // reading (from buf or for direct reading).
 // Returns true if something available, false if not.
@@ -448,10 +453,9 @@ int uart_rx_char(pyb_uart_obj_t *self) {
 // Waits at most timeout milliseconds for TX register to become empty.
 // Returns true if can write, false if can't.
 bool uart_tx_wait(pyb_uart_obj_t *self, uint32_t timeout) {
-    int ch = (int)self->uart_id - 1;
     uint32_t start = HAL_GetTick();
     for (;;) {
-        if (ra_sci_tx_wait(ch)) {
+        if (uart_tx_avail(self)) {
             return true;
         }
         if (HAL_GetTick() - start >= timeout) {

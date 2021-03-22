@@ -551,11 +551,9 @@ STATIC mp_uint_t pyb_uart_ioctl(mp_obj_t self_in, mp_uint_t request, uintptr_t a
         if ((flags & MP_STREAM_POLL_RD) && uart_rx_any(self)) {
             ret |= MP_STREAM_POLL_RD;
         }
-        #if RX_TODO
         if ((flags & MP_STREAM_POLL_WR) && uart_tx_avail(self)) {
             ret |= MP_STREAM_POLL_WR;
         }
-        #endif
     } else {
         *errcode = MP_EINVAL;
         ret = MP_STREAM_ERROR;
