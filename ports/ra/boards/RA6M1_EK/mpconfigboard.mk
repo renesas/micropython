@@ -11,4 +11,4 @@ MICROPY_SSL_MBEDTLS=0
 MICROPY_PY_ESP8266=0
 
 # comment out -> don't include default frozen modules because MCU is tight on flash space
-#FROZEN_MANIFEST ?=
+# FROZEN_MANIFEST ?=
