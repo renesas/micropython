@@ -167,7 +167,13 @@
 #define MICROPY_PY_UCRYPTOLIB       (MICROPY_PY_USSL)
 #ifndef MICROPY_PY_UBINASCII
 #define MICROPY_PY_UBINASCII        (1)
+#define MICROPY_PY_UBINASCII_CRC32  (1)
 #endif
+#ifndef MICROPY_PY_UOS
+#define MICROPY_PY_UOS              (1)
+#endif
+#define MICROPY_PY_OS_DUPTERM       (3)
+#define MICROPY_PY_UOS_DUPTERM_BUILTIN_STREAM (1)
 #ifndef MICROPY_PY_URANDOM
 #define MICROPY_PY_URANDOM          (1)
 #define MICROPY_PY_URANDOM_SEED_INIT_FUNC (rng_get())
@@ -176,13 +182,15 @@
 #define MICROPY_PY_URANDOM_EXTRA_FUNCS (1)
 #endif
 #define MICROPY_PY_USELECT          (1)
+#ifndef MICROPY_PY_UTIME
+#define MICROPY_PY_UTIME            (1)
+#endif
+#define MICROPY_PY_UTIME_MP_HAL     (MICROPY_PY_UTIME)
 #ifndef MICROPY_PY_UTIMEQ
 #define MICROPY_PY_UTIMEQ           (1)
 #endif
-#define MICROPY_PY_UTIME_MP_HAL     (1)
-#define MICROPY_PY_OS_DUPTERM       (3)
-#define MICROPY_PY_UOS_DUPTERM_BUILTIN_STREAM (1)
 #define MICROPY_PY_LWIP_SOCK_RAW    (MICROPY_PY_LWIP)
+#ifndef MICROPY_PY_MACHINE
 #define MICROPY_PY_MACHINE          (1)
 #define MICROPY_PY_MACHINE_PULSE    (1)
 #define MICROPY_PY_MACHINE_PIN_MAKE_NEW mp_pin_make_new
@@ -190,6 +198,7 @@
 #define MICROPY_PY_MACHINE_SPI      (1)
 #define MICROPY_PY_MACHINE_SPI_MSB  (SPI_FIRSTBIT_MSB)
 #define MICROPY_PY_MACHINE_SPI_LSB  (SPI_FIRSTBIT_LSB)
+#endif
 #define MICROPY_HW_SOFTSPI_MIN_DELAY (0)
 #define MICROPY_HW_SOFTSPI_MAX_BAUDRATE (48000000 / 48)
 #define MICROPY_PY_UWEBSOCKET       (MICROPY_PY_LWIP)
@@ -202,6 +211,9 @@
 #endif
 #ifndef MICROPY_PY_NETWORK
 #define MICROPY_PY_NETWORK          (1)
+#endif
+#ifndef MICROPY_PY_ONEWIRE
+#define MICROPY_PY_ONEWIRE          (1)
 #endif
 
 // fatfs configuration used in ffconf.h
@@ -248,11 +260,42 @@ extern const struct _mp_obj_module_t mp_module_utime;
 // extern const struct _mp_obj_module_t mp_module_network;
 extern const struct _mp_obj_module_t mp_module_onewire;
 
+#if MICROPY_PY_PYB
+#define PYB_BUILTIN_MODULE                  { MP_ROM_QSTR(MP_QSTR_pyb), MP_ROM_PTR(&pyb_module) },
+#else
+#define PYB_BUILTIN_MODULE
+#endif
+
+#if MICROPY_PY_RAB
+#define RAB_BUILTIN_MODULE                  { MP_ROM_QSTR(MP_QSTR_rab), MP_ROM_PTR(&pyb_module) },
+#else
+#define RAB_BUILTIN_MODULE
+#endif
+
 // #if MICROPY_PY_STM
 // #define STM_BUILTIN_MODULE               { MP_ROM_QSTR(MP_QSTR_stm), MP_ROM_PTR(&stm_module) },
 // #else
 // #define STM_BUILTIN_MODULE
 // #endif
+#if MICROPY_PY_MACHINE
+#define MACHINE_BUILTIN_MODULE              { MP_ROM_QSTR(MP_QSTR_umachine), MP_ROM_PTR(&machine_module) },
+#define MACHINE_BUILTIN_MODULE_CONSTANTS    { MP_ROM_QSTR(MP_QSTR_machine), MP_ROM_PTR(&machine_module) },
+#else
+#define MACHINE_BUILTIN_MODULE
+#define MACHINE_BUILTIN_MODULE_CONSTANTS
+#endif
+
+#if MICROPY_PY_UOS
+#define UOS_BUILTIN_MODULE                  { MP_ROM_QSTR(MP_QSTR_uos), MP_ROM_PTR(&mp_module_uos) },
+#else
+#define UOS_BUILTIN_MODULE
+#endif
+
+#if MICROPY_PY_UTIME
+#define UTIME_BUILTIN_MODULE                { MP_ROM_QSTR(MP_QSTR_utime), MP_ROM_PTR(&mp_module_utime) },
+#else
+#define UTIME_BUILTIN_MODULE
+#endif
 
 #if MICROPY_PY_USOCKET && MICROPY_PY_LWIP
 // usocket implementation provided by lwIP
@@ -271,23 +314,29 @@ extern const struct _mp_obj_module_t mp_module_onewire;
 #define NETWORK_BUILTIN_MODULE
 #endif
 
+#if MICROPY_PY_ONEWIRE
+#define ONEWIRE_BUILTIN_MODULE              { MP_ROM_QSTR(MP_QSTR__onewire), MP_ROM_PTR(&mp_module_onewire) },
+#else
+#define ONEWIRE_BUILTIN_MODULE
+#endif
+
 #define MICROPY_PORT_BUILTIN_MODULES \
-    { MP_ROM_QSTR(MP_QSTR_umachine), MP_ROM_PTR(&machine_module) }, \
-    { MP_ROM_QSTR(MP_QSTR_rab), MP_ROM_PTR(&pyb_module) }, \
-    { MP_ROM_QSTR(MP_QSTR_pyb), MP_ROM_PTR(&pyb_module) }, \
+    MACHINE_BUILTIN_MODULE \
+    PYB_BUILTIN_MODULE \
+    RAB_BUILTIN_MODULE \
     /* STM_BUILTIN_MODULE */ \
-    { MP_ROM_QSTR(MP_QSTR_uos), MP_ROM_PTR(&mp_module_uos) }, \
-    { MP_ROM_QSTR(MP_QSTR_utime), MP_ROM_PTR(&mp_module_utime) }, \
+    UOS_BUILTIN_MODULE \
+    UTIME_BUILTIN_MODULE \
     SOCKET_BUILTIN_MODULE \
     NETWORK_BUILTIN_MODULE \
-    { MP_ROM_QSTR(MP_QSTR__onewire), MP_ROM_PTR(&mp_module_onewire) }, \
+    ONEWIRE_BUILTIN_MODULE \
 
 // extra constants
 #define MICROPY_PORT_CONSTANTS \
-    { MP_ROM_QSTR(MP_QSTR_umachine), MP_ROM_PTR(&machine_module) }, \
-    { MP_ROM_QSTR(MP_QSTR_machine), MP_ROM_PTR(&machine_module) }, \
-    { MP_ROM_QSTR(MP_QSTR_pyb), MP_ROM_PTR(&pyb_module) }, \
-    { MP_ROM_QSTR(MP_QSTR_rab), MP_ROM_PTR(&pyb_module) }, \
+    MACHINE_BUILTIN_MODULE \
+    MACHINE_BUILTIN_MODULE_CONSTANTS \
+    PYB_BUILTIN_MODULE \
+    RAB_BUILTIN_MODULE \
     /* STM_BUILTIN_MODULE */ \
 
 #define MP_STATE_PORT MP_STATE_VM
@@ -336,7 +385,7 @@ struct _mp_bluetooth_btstack_root_pointers_t;
     struct _pyb_uart_obj_t *pyb_stdio_uart; \
     \
     /* pointers to all UART objects (if they have been created) */ \
-    struct _pyb_uart_obj_t *pyb_uart_obj_all[MICROPY_HW_MAX_UART]; \
+    struct _pyb_uart_obj_t *pyb_uart_obj_all[MICROPY_HW_MAX_UART + MICROPY_HW_MAX_LPUART]; \
     \
     /* pointers to all CAN objects (if they have been created) */ \
     /* struct _pyb_can_obj_t *pyb_can_obj_all[MICROPY_HW_MAX_CAN]; */ \
@@ -363,8 +412,6 @@ typedef unsigned int mp_uint_t; // must be pointer size
 #endif
 
 typedef long mp_off_t;
-
-#define MP_PLAT_PRINT_STRN(str, len) mp_hal_stdout_tx_strn_cooked(str, len)
 
 // We have inlined IRQ functions for efficiency (they are generally
 // 1 machine instruction).

@@ -38,6 +38,16 @@
 #define MICROPY_PY_RA (1)
 #endif
 
+// Whether to include the pyb module
+#ifndef MICROPY_PY_PYB
+#define MICROPY_PY_PYB (1)
+#endif
+
+// Whether to include the pyb module
+#ifndef MICROPY_PY_RAB
+#define MICROPY_PY_RAB (1)
+#endif
+
 // Whether to include legacy functions and classes in the pyb module
 #ifndef MICROPY_PY_PYB_LEGACY
 #define MICROPY_PY_PYB_LEGACY (1)
@@ -179,6 +189,7 @@
 #define MICROPY_HW_MAX_I2C (2)
 #define MICROPY_HW_MAX_TIMER (2)
 #define MICROPY_HW_MAX_UART (10)
+#define MICROPY_HW_MAX_LPUART (0)
 
 #elif defined(RA4M3)
 
@@ -188,6 +199,7 @@
 #define MICROPY_HW_MAX_I2C (2)
 #define MICROPY_HW_MAX_TIMER (2)
 #define MICROPY_HW_MAX_UART (10)
+#define MICROPY_HW_MAX_LPUART (0)
 
 #elif defined(RA4W1)
 
@@ -197,6 +209,7 @@
 #define MICROPY_HW_MAX_I2C (2)
 #define MICROPY_HW_MAX_TIMER (2)
 #define MICROPY_HW_MAX_UART (10)
+#define MICROPY_HW_MAX_LPUART (0)
 
 #elif defined(RA6M1)
 
@@ -206,6 +219,7 @@
 #define MICROPY_HW_MAX_I2C (2)
 #define MICROPY_HW_MAX_TIMER (2)
 #define MICROPY_HW_MAX_UART (10)
+#define MICROPY_HW_MAX_LPUART (0)
 
 #elif defined(RA6M2)
 
@@ -215,6 +229,7 @@
 #define MICROPY_HW_MAX_I2C (2)
 #define MICROPY_HW_MAX_TIMER (2)
 #define MICROPY_HW_MAX_UART (10)
+#define MICROPY_HW_MAX_LPUART (0)
 
 #elif defined(RA6M3)
 
@@ -224,6 +239,7 @@
 #define MICROPY_HW_MAX_I2C (2)
 #define MICROPY_HW_MAX_TIMER (2)
 #define MICROPY_HW_MAX_UART (10)
+#define MICROPY_HW_MAX_LPUART (0)
 
 #error Unsupported MCU series
 #endif
