@@ -28,7 +28,7 @@
 #ifndef MICROPY_INCLUDED_RA_UART_H
 #define MICROPY_INCLUDED_RA_UART_H
 
-#include "lib/utils/mpirq.h"
+#include "shared/runtime/mpirq.h"
 
 typedef enum {
     PYB_UART_NONE = 0,

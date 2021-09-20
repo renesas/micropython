@@ -30,7 +30,7 @@
 
 #include "py/runtime.h"
 #include "py/mphal.h"
-#include "lib/utils/pyexec.h"
+#include "shared/runtime/pyexec.h"
 #include "drivers/dht/dht.h"
 #include "ra_it.h"
 #include "irq.h"

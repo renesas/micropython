@@ -98,10 +98,6 @@ MP_WEAK int mp_hal_stdin_rx_chr(void) {
     }
 }
 
-void mp_hal_stdout_tx_str(const char *str) {
-    mp_hal_stdout_tx_strn(str, strlen(str));
-}
-
 #if defined(USE_SEGGER_RTT)
 void SEGGER_RTT_txt_strn(const char *str, size_t len) {
     SEGGER_RTT_Write(0, (const void *)str, (unsigned)len);
@@ -119,26 +115,6 @@ MP_WEAK void mp_hal_stdout_tx_strn(const char *str, size_t len) {
     #if defined(USE_SEGGER_RTT)
     SEGGER_RTT_txt_strn(str, len);
     #endif
-}
-
-// Efficiently convert "\n" to "\r\n"
-void mp_hal_stdout_tx_strn_cooked(const char *str, size_t len) {
-    const char *last = str;
-    while (len--) {
-        if (*str == '\n') {
-            if (str > last) {
-                mp_hal_stdout_tx_strn(last, str - last);
-            }
-            mp_hal_stdout_tx_strn("\r\n", 2);
-            ++str;
-            last = str;
-        } else {
-            ++str;
-        }
-    }
-    if (str > last) {
-        mp_hal_stdout_tx_strn(last, str - last);
-    }
 }
 
 void mp_hal_ticks_cpu_enable(void) {
