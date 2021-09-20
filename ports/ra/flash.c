@@ -56,4 +56,3 @@ bool flash_write(uint32_t flash_dest, const uint32_t *src, uint32_t num_word32) 
     ret = internal_flash_write((unsigned char *)flash_dest, num_word32, (uint8_t *)src, false);
     return ret;
 }
-

@@ -34,4 +34,3 @@ static inline void powerctrl_config_systick(void) {
     SysTick_Config(MICROPY_HW_MCU_SYSCLK / 1000);
     NVIC_SetPriority(SysTick_IRQn, IRQ_PRI_SYSTICK);
 }
-
