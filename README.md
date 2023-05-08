@@ -1,5 +1,16 @@
 [![Unix CI badge](https://github.com/micropython/micropython/actions/workflows/ports_unix.yml/badge.svg)](https://github.com/micropython/micropython/actions?query=branch%3Amaster+event%3Apush) [![STM32 CI badge](https://github.com/micropython/micropython/actions/workflows/ports_stm32.yml/badge.svg)](https://github.com/micropython/micropython/actions?query=branch%3Amaster+event%3Apush) [![Docs CI badge](https://github.com/micropython/micropython/actions/workflows/docs.yml/badge.svg)](https://docs.micropython.org/) [![codecov](https://codecov.io/gh/micropython/micropython/branch/master/graph/badge.svg?token=I92PfD05sD)](https://codecov.io/gh/micropython/micropython)
 
+MicroPython for Renesas microcontrollers
+========================================
+* `Renesas RA port` for Renesas RA Family microcontroller is supported and released by [the MicroPython project](https://github.com/micropython/micropython) since 29 April, 2022.
+* The latest information about Renesas RA port is available on [micropython.org](https://micropython.org). 
+* Please refer to the [Quick reference for the Renesas RA](https://docs.micropython.org/en/latest/renesas-ra/quickref.html) in [MicroPython documentation](https://docs.micropython.org/en/latest) about the features of Renesas RA port.
+* Please refer to [Renesas RA port](https://docs.micropython.org/en/latest/renesas-ra/general.html) about supported boards.
+* The pre-built firmware image is available on each board page of [DOWNLOAD](https://micropython.org/download/?port=renesas-ra). This page also includes installation instructions.
+* If you are interested in building and debugging, please refer to the Wiki pages [How to build](https://github.com/renesas/micropython/wiki/How-to-build) and [How to debug](https://github.com/renesas/micropython/wiki/How-to-debug).
+<BR>
+<BR>
+
 The MicroPython project
 =======================
 <p align="center">
